@@ -7,3 +7,6 @@ class Recipe(models.Model):
     timeToPrepare = models.IntegerField(default=1)
     portions = models.IntegerField(default=1)
     ingridients = models.TextField(default="")
+
+    def __str__(self):
+        return self.name
