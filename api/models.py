@@ -11,7 +11,8 @@ class Recipe(models.Model):
     howToPrepare = models.TextField(default="")
     timeToPrepare = models.IntegerField(default=1)
     portions = models.IntegerField(default=1)
-    ingridients = models.OneToOneField(Ingridient)
+    ingridients = models.OneToOneField(Ingridient, on_delete=models.CASCADE,)
+
 
     def __str__(self):
         return self.name
