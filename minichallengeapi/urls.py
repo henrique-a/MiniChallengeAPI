@@ -22,6 +22,8 @@ from api import models
 
 router = routers.DefaultRouter()
 router.register(r'recipes', views.RecipeViewSet)
+router.register(r'ingridients', views.IngridientViewSet)
+
 
 
 urlpatterns = [
