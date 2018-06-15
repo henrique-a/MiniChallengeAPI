@@ -4,7 +4,7 @@ from api.models import Ingridient
 
 
 class IngridientSerializer(serializers.HyperlinkedModelSerializer):
-    recipe = serializers.RelatedField(source='recipe')
+    recipe = serializers.RelatedField(source='recipe', read_only=True)
 
     class Meta:
         model = Ingridient
