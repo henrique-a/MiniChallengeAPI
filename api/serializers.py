@@ -8,18 +8,19 @@ class IngridientSerializer(serializers.HyperlinkedModelSerializer):
         model = Ingridient
         fields = '__all__'
 
+    def create(self, validated_data):
+    
+        recipe_data = validated_data.pop('recipe')
+        recipe = RecipeSerializer.create(RecipeSerializer(), validated_data=recipe_data)
+        ingridient, created = Ingridient.objects.update_or_create(description=validated_data.pop('description'),
+                            quantity=validated_data.pop('quantity'),
+                            unity=validated_data.pop('unity'),
+                            recipe=recipe)
+        return recipe
+
 class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Recipe
         fields = '__all__'
 
-    def create(self, validated_data):
-        
-        ingridient_data = validated_data.pop('ingridient')
-        ingridient = IngridientSerializer.create(IngridientSerializer(), validated_data=ingridient_data)
-        recipe, created = Recipe.objects.update_or_create(name=validated_data.pop('name'),
-                            howToPrepare=validated_data.pop('howToPrepare'),
-                            timeToPrepare=validated_data.pop('timeToPrepare'),
-                            portions=validated_data.pop('portions'),
-                            ingridient=ingridient)
-        return recipe
+    
