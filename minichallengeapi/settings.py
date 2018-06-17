@@ -14,7 +14,6 @@ import os
 import django_heroku
 import dj_database_url
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +31,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+#SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -80,9 +81,18 @@ WSGI_APPLICATION = 'minichallengeapi.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'minichallengeapi',
+        'USER': 'admin',
+        'PASSWORD': 'admin123',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -120,11 +130,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# if DEBUG:
+#     MEDIA_URL = '/media/'
+#     MEDIA_ROOT = os.path.join(BASE_DIR, 'minichallengeapi/media')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = 'AKIAJ4DBTQJM4AAT5BPQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'minichallengeapi'
+AWS_PRELOAD_METADATA = True
+AWS_S3_CUSTOM_DOMAIN = 'minichallengeapi.s3.amazonaws.com'
+MEDIA_URL = 'https://minichallengeapi.s3.amazonaws.com/media/'
 
 django_heroku.settings(locals())

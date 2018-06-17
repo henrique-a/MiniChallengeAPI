@@ -4,21 +4,10 @@ from api.models import Ingridient
 
 
 class IngridientSerializer(serializers.ModelSerializer):
-    # recipe = serializers.RelatedField(read_only=True)
 
     class Meta:
         model = Ingridient
         fields = '__all__'
-
-    # def create(self, validated_data):
-    
-    #     recipe_data = validated_data.pop('recipe')
-    #     recipe = RecipeSerializer.create(RecipeSerializer(), validated_data=recipe_data)
-    #     ingridient, created = Ingridient.objects.update_or_create(description=validated_data.pop('description'),
-    #                         quantity=validated_data.pop('quantity'),
-    #                         unity=validated_data.pop('unity'),
-    #                         recipe=recipe)
-    #     return recipe
 
 class RecipeSerializer(serializers.ModelSerializer):
     ingridients = IngridientSerializer(many=True, read_only=True)
@@ -32,5 +21,3 @@ class RecipeSerializer(serializers.ModelSerializer):
         for ingridient_data in ingridients_data:
             Ingridient.objects.create(recipe=recipe, **ingridient_data)
         return recipe
-
-    
