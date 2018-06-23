@@ -15,9 +15,9 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = '__all__'
 
-    def create(self, validated_data):
-        ingridients_data = validated_data.pop('ingridients')
-        recipe = Recipe.objects.create(**validated_data)
-        for ingridient_data in ingridients_data:
-            Ingridient.objects.create(recipe=recipe, **ingridient_data)
-        return recipe
+    # def create(self, validated_data):
+    #     ingridients_data = validated_data.pop('ingridients')
+    #     recipe = Recipe.objects.create(**validated_data)
+    #     for ingridient_data in ingridients_data:
+    #         Ingridient.objects.create(recipe=recipe, **ingridient_data)
+    #     return recipe

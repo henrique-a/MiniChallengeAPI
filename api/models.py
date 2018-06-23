@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=50, default="", primary_key=True)
+    name = models.CharField(max_length=50, default="")
     howToPrepare = models.TextField(default="")
     timeToPrepare = models.IntegerField(default=0)
     portions = models.IntegerField(default=0)
