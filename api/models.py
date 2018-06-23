@@ -8,6 +8,7 @@ class Recipe(models.Model):
     timeToPrepare = models.IntegerField(default=1)
     portions = models.IntegerField(default=1)
     image = models.ImageField(null=True, blank=True, upload_to='img')
+    favorite = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

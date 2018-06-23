@@ -25,8 +25,6 @@ router = routers.DefaultRouter()
 router.register(r'recipes', views.RecipeViewSet)
 router.register(r'ingridients', views.IngridientViewSet)
 
-
-
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include(router.urls)),
